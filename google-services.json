@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "445082810786",
+    "project_id": "dem-ai-67730",
+    "storage_bucket": "dem-ai-67730.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445082810786:android:4d8ef4dee7c47ae7079afb",
+        "android_client_info": {
+          "package_name": "com.demal.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445082810786-vjcadpk95mrtnvmdkmgq0tqrljkalc59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.demal.app",
+            "certificate_hash": "620b9aff6210d53ffa982160f05465408535b3dd"
+          }
+        },
+        {
+          "client_id": "445082810786-lq9d5b1lh6i4e83v1k82h2g8nk8mhdh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoAOn8n_pfiDLAIngLnnl2rdYEETUsviA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445082810786-lq9d5b1lh6i4e83v1k82h2g8nk8mhdh1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "445082810786-1lmm42tv3phjj4rbc9nnh59dtugk0743.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.demal.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

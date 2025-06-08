@@ -1,0 +1,134 @@
+{
+  "expo": {
+    "name": "dem-AI",
+    "slug": "dem-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#03174C"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.demal.app",
+      "buildNumber": "1.0.0",
+      "config": {
+        "usesNonExemptEncryption": false,
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.445082810786-1lmm42tv3phjj4rbc9nnh59dtugk0743"
+        },
+        "facebookAppId": "1131088858800791",
+        "facebookDisplayName": "DEM AI",
+        "facebookAutoLogAppEventsEnabled": false
+      },
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "fb1131088858800791",
+              "demai",
+              "com.googleusercontent.apps.445082810786-1lmm42tv3phjj4rbc9nnh59dtugk0743"
+            ]
+          }
+        ],
+        "LSApplicationQueriesSchemes": [
+          "fbapi",
+          "fb-messenger-share",
+          "fbauth2",
+          "fbshareextension",
+          "googlechromes",
+          "comgooglemaps"
+        ],
+        "FacebookAppID": "1131088858800791",
+        "FacebookClientToken": "7e393518bc7c78771a5611d7736cbae4",
+        "FacebookDisplayName": "DEM AI",
+        "FacebookAutoLogAppEventsEnabled": false,
+        "FacebookAdvertiserIDCollectionEnabled": false
+      }
+    },
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#03174C"
+      },
+      "package": "com.demal.app",
+      "versionCode": 1,
+      "permissions": [
+        "INTERNET"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "demai",
+              "host": "auth",
+              "pathPrefix": "/callback"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        },
+        {
+          "action": "VIEW",
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ],
+          "data": [
+            {
+              "scheme": "fb1131088858800791"
+            }
+          ]
+        }
+      ]
+    },
+    "scheme": "demai",
+    "plugins": [
+      [
+        "expo-facebook",
+        {
+          "appID": "1131088858800791",
+          "clientToken": "7e393518bc7c78771a5611d7736cbae4",
+          "displayName": "DEM AI",
+          "scheme": "fb1131088858800791",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": false
+        }
+      ],
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app needs access to your photos to set your profile picture."
+        }
+      ],
+      "expo-asset",
+      "expo-font",
+      "expo-web-browser"
+    ],
+    "newArchEnabled": true,
+    "extra": {
+      "eas": {
+        "projectId": "your-project-id"
+      },
+      "facebookAppId": "1131088858800791",
+      "facebookClientToken": "7e393518bc7c78771a5611d7736cbae4"
+    },
+    "owner": "yersultan12",
+    "web": {
+      "favicon": "./assets/icon.png"
+    }
+  }
+}
