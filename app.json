@@ -49,7 +49,16 @@
         "FacebookClientToken": "7e393518bc7c78771a5611d7736cbae4",
         "FacebookDisplayName": "DEM AI",
         "FacebookAutoLogAppEventsEnabled": false,
-        "FacebookAdvertiserIDCollectionEnabled": false
+        "FacebookAdvertiserIDCollectionEnabled": false,
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+        "SKAdNetworkItems": [
+          {
+            "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
+          },
+          {
+            "SKAdNetworkIdentifier": "n38lu8286q.skadnetwork"
+          }
+        ]
       }
     },
     "android": {
@@ -61,7 +70,8 @@
       "package": "com.demal.app",
       "versionCode": 1,
       "permissions": [
-        "INTERNET"
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO"
       ],
       "intentFilters": [
         {
@@ -121,7 +131,7 @@
     "newArchEnabled": true,
     "extra": {
       "eas": {
-        "projectId": "your-project-id"
+        "projectId": "f9007a81-3fe2-4690-9610-6353f59ee041"
       },
       "facebookAppId": "1131088858800791",
       "facebookClientToken": "7e393518bc7c78771a5611d7736cbae4"
