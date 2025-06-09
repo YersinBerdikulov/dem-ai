@@ -43,7 +43,11 @@
           "googlechromes",
           "comgooglemaps"
         ],
-       
+        "FacebookAppID": "1131088858800791",
+        "FacebookClientToken": "7e393518bc7c78771a5611d7736cbae4",
+        "FacebookDisplayName": "DEM AI",
+        "FacebookAutoLogAppEventsEnabled": false,
+        "FacebookAdvertiserIDCollectionEnabled": false,
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
         "SKAdNetworkItems": [
           {
@@ -99,10 +103,7 @@
     },
     "scheme": "demai",
     "plugins": [
-      [
-      
-      ],
-      "@react-native-google-signin/google-signin",
+   
       [
         "expo-image-picker",
         {

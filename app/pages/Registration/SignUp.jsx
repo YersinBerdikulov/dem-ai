@@ -14,7 +14,7 @@ import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { authStyles } from '../../../styles/auth/style';
 import { signUpWithEmail } from '../../../services/auth';
-import { useFacebookAuth } from '../../../services/facebookAuth'; // Updated import
+
 import { useGoogleAuth } from '../../hooks/useGoogleAuth';
 
 const SignUp = ({ navigation }) => {

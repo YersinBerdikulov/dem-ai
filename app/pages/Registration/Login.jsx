@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import { authStyles } from '../../../styles/auth/styles';
 import { signInWithEmail } from '../../../services/auth';
-import { useFacebookAuth } from '../../../services/facebookAuth';
+
 import { useGoogleAuth } from '../../hooks/useGoogleAuth';
 
 const Login = ({ navigation }) => {
