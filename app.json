@@ -23,7 +23,6 @@
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.445082810786-1lmm42tv3phjj4rbc9nnh59dtugk0743"
         }
-     
       },
       "infoPlist": {
         "CFBundleURLTypes": [
@@ -61,11 +60,12 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
+      "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#03174C"
       },
-      "package": "com.demal.app",
+      "package": "com.demai.app",
       "versionCode": 1,
       "permissions": [
         "android.permission.INTERNET",
@@ -103,7 +103,6 @@
     },
     "scheme": "demai",
     "plugins": [
-   
       [
         "expo-image-picker",
         {
