@@ -29,8 +29,8 @@ const SignUp = ({ navigation }) => {
   });
   
 
-  // Use the Facebook auth hook
-  const [promptFacebookLogin, facebookUser, fbLoading, fbError, fbRequest] = useFacebookAuth();
+
+
   const [signInWithGoogle, googleRequest] = useGoogleAuth();
 
   const [fontsLoaded] = useFonts({
@@ -41,32 +41,8 @@ const SignUp = ({ navigation }) => {
   });
 
   // Monitor Facebook user state
-  React.useEffect(() => {
-    if (facebookUser) {
-      navigation.navigate('MainApp');
-    }
-    if (fbError) {
-      Alert.alert(
-        'Authentication Error',
-        'Failed to sign in with Facebook. Please try again.'
-      );
-    }
-  }, [facebookUser, fbError, navigation]);
 
-  const handleFacebookSignUp = async () => {
-    try {
-      setSocialLoading({ ...socialLoading, facebook: true });
-      await promptFacebookLogin();
-    } catch (error) {
-      console.error('Facebook signup error:', error);
-      Alert.alert(
-        'Authentication Error',
-        'Failed to sign in with Facebook. Please try again.'
-      );
-    } finally {
-      setSocialLoading({ ...socialLoading, facebook: false });
-    }
-  };
+
 
   const handleGoogleSignUp = async () => {
     try {

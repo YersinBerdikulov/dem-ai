@@ -20,6 +20,7 @@ import { therapistDetailStyles as styles } from '../../../../styles/discover/the
 import CustomMapMarker from './CustomMapMarker';
 import { useLanguage } from '../../../context/LanguageContext';
 
+
 const TherapistDetail = ({ route, navigation }) => {
   const { therapist } = route.params;
   const { t } = useLanguage();
@@ -173,11 +174,7 @@ const TherapistDetail = ({ route, navigation }) => {
           </TouchableOpacity>
           <Text style={styles.headerTitle}>{t('therapy.specialistProfile')}</Text>
           <TouchableOpacity onPress={toggleFavorite}>
-            <Ionicons 
-              name={isFavorite ? "heart" : "heart-outline"} 
-              size={24} 
-              color={isFavorite ? "#FFA8A8" : "white"} 
-            />
+         
           </TouchableOpacity>
         </View>
         
@@ -224,12 +221,7 @@ const TherapistDetail = ({ route, navigation }) => {
               <Text style={styles.actionText}>{t('therapy.website')}</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.actionButton} onPress={handleBooking}>
-              <View style={styles.actionIconContainer}>
-                <Ionicons name="calendar" size={20} color="white" />
-              </View>
-              <Text style={styles.actionText}>{t('therapy.book')}</Text>
-            </TouchableOpacity>
+          
           </View>
           
           <View style={styles.section}>
@@ -359,11 +351,7 @@ const TherapistDetail = ({ route, navigation }) => {
             </View>
           )}
           
-          <View style={styles.bookingContainer}>
-            <TouchableOpacity style={styles.bookingButton} onPress={handleBooking}>
-              <Text style={styles.bookingButtonText}>{t('therapy.bookAppointment')}</Text>
-            </TouchableOpacity>
-          </View>
+        
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>

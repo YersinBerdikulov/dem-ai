@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
   });
 
   // Use the Facebook auth hook
-  const [handleFacebookLogin, facebookUser, fbLoading, fbError] = useFacebookAuth();
+ 
 
   // Use the updated Google auth hook
   const [googleSignIn, googleAuthState] = useGoogleAuth();
@@ -38,19 +38,7 @@ const Login = ({ navigation }) => {
   const hasNavigated = useRef(false);
 
   // Monitor Facebook user state
-  useEffect(() => {
-    if (facebookUser && !hasNavigated.current) {
-      hasNavigated.current = true;
-      navigation.navigate('MainApp'); // Navigate to the main app after successful login
-    }
-    if (fbError) {
-      Alert.alert(
-        'Authentication Error',
-        'Failed to sign in with Facebook. Please try again.'
-      );
-    }
-  }, [facebookUser, fbError, navigation]);
-
+ 
   // Monitor Google user state
   useEffect(() => {
     // Only navigate if we have a valid user object and haven't already navigated

@@ -48,35 +48,55 @@ const FilterModal = ({ visible, onClose, currentFilters, onApply, cities, select
 
   useEffect(() => {
     setFilters(currentFilters);
-    setSelectedSpecializations(currentFilters.specializations || []);
+    setSelectedSpecializations(currentFilters.specializations || [t('therapy.specializations.psychologist')]);
     setSelectedLanguages(currentFilters.languages || []);
     setCitySelection(selectedCity || cities[0]);
   }, [currentFilters, visible, selectedCity]);
 
   const toggleSpecialization = (specialization) => {
+    let newSpecializations;
     if (selectedSpecializations.includes(specialization)) {
-      setSelectedSpecializations(selectedSpecializations.filter(s => s !== specialization));
+      newSpecializations = selectedSpecializations.filter(s => s !== specialization);
     } else {
-      setSelectedSpecializations([...selectedSpecializations, specialization]);
+      newSpecializations = [...selectedSpecializations, specialization];
     }
+    setSelectedSpecializations(newSpecializations);
+    
+    // Update filters immediately
+    setFilters({
+      ...filters,
+      specializations: newSpecializations
+    });
   };
 
   const toggleLanguage = (language) => {
+    let newLanguages;
     if (selectedLanguages.includes(language)) {
-      setSelectedLanguages(selectedLanguages.filter(l => l !== language));
+      newLanguages = selectedLanguages.filter(l => l !== language);
     } else {
-      setSelectedLanguages([...selectedLanguages, language]);
+      newLanguages = [...selectedLanguages, language];
     }
+    setSelectedLanguages(newLanguages);
+    
+    // Update filters immediately
+    setFilters({
+      ...filters,
+      languages: newLanguages
+    });
   };
 
   const handleCitySelection = (city) => {
     setCitySelection(city);
+    setFilters({
+      ...filters,
+      city: city
+    });
   };
 
   const handleApply = () => {
     const newFilters = {
       ...filters,
-      specializations: selectedSpecializations,
+      specializations: selectedSpecializations.length > 0 ? selectedSpecializations : [t('therapy.specializations.psychologist')],
       languages: selectedLanguages,
       city: citySelection
     };
@@ -85,15 +105,17 @@ const FilterModal = ({ visible, onClose, currentFilters, onApply, cities, select
   };
 
   const resetFilters = () => {
-    setFilters({
-      specializations: [],
+    const defaultFilters = {
+      specializations: [t('therapy.specializations.psychologist')], // Default to psychologist
       distance: 5000, // 5km in meters for Google API
       rating: 0,
       videoSessions: false,
       languages: [],
       city: cities[0] // Reset to current location
-    });
-    setSelectedSpecializations([]);
+    };
+    
+    setFilters(defaultFilters);
+    setSelectedSpecializations([t('therapy.specializations.psychologist')]);
     setSelectedLanguages([]);
     setCitySelection(cities[0]);
   };
@@ -151,6 +173,38 @@ const FilterModal = ({ visible, onClose, currentFilters, onApply, cities, select
               </View>
             </View>
 
+            {/* Specializations Filter - Most Important */}
+            <View style={styles.filterSection}>
+              <Text style={styles.sectionTitle}>{t('therapy.specialization')}</Text>
+              <Text style={styles.noteText}>
+                {t('therapy.selectSpecializationNote')}
+              </Text>
+              <View style={styles.chipsContainer}>
+                {specializations.map((specialization) => (
+                  <TouchableOpacity
+                    key={specialization}
+                    style={[
+                      styles.chip,
+                      selectedSpecializations.includes(specialization) && styles.selectedChip
+                    ]}
+                    onPress={() => toggleSpecialization(specialization)}
+                  >
+                    <Text
+                      style={[
+                        styles.chipText,
+                        selectedSpecializations.includes(specialization) && styles.selectedChipText
+                      ]}
+                    >
+                      {specialization}
+                    </Text>
+                    {selectedSpecializations.includes(specialization) && (
+                      <Ionicons name="checkmark-circle" size={16} color="#007AFF" style={styles.checkIcon} />
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
             {/* Distance Filter */}
             <View style={styles.filterSection}>
               <Text style={styles.sectionTitle}>{t('therapy.searchRadius')}</Text>
@@ -189,6 +243,12 @@ const FilterModal = ({ visible, onClose, currentFilters, onApply, cities, select
                     />
                   </TouchableOpacity>
                 ))}
+                <TouchableOpacity
+                  onPress={() => setFilters({...filters, rating: 0})}
+                  style={styles.clearRatingButton}
+                >
+            
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -207,32 +267,6 @@ const FilterModal = ({ visible, onClose, currentFilters, onApply, cities, select
               <Text style={styles.noteText}>
                 {t('therapy.onlineConsultationsNote')}
               </Text>
-            </View>
-
-            {/* Specializations Filter */}
-            <View style={styles.filterSection}>
-              <Text style={styles.sectionTitle}>{t('therapy.specialization')}</Text>
-              <View style={styles.chipsContainer}>
-                {specializations.map((specialization) => (
-                  <TouchableOpacity
-                    key={specialization}
-                    style={[
-                      styles.chip,
-                      selectedSpecializations.includes(specialization) && styles.selectedChip
-                    ]}
-                    onPress={() => toggleSpecialization(specialization)}
-                  >
-                    <Text
-                      style={[
-                        styles.chipText,
-                        selectedSpecializations.includes(specialization) && styles.selectedChipText
-                      ]}
-                    >
-                      {specialization}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
             </View>
 
             {/* Languages Filter */}
@@ -259,15 +293,46 @@ const FilterModal = ({ visible, onClose, currentFilters, onApply, cities, select
                     >
                       {language}
                     </Text>
+                    {selectedLanguages.includes(language) && (
+                      <Ionicons name="checkmark-circle" size={16} color="#007AFF" style={styles.checkIcon} />
+                    )}
                   </TouchableOpacity>
                 ))}
+              </View>
+            </View>
+
+            {/* Active Filters Summary */}
+            <View style={styles.filterSection}>
+            
+              <View style={styles.summaryContainer}>
+              
+                <Text style={styles.summaryText}>
+                  {`${t('therapy.distance')}: ${(filters.distance / 1000).toFixed(0)} ${t('therapy.kilometers')}`}
+                </Text>
+                {filters.rating > 0 && (
+                  <Text style={styles.summaryText}>
+                    {`${t('therapy.rating')}: ${filters.rating}+ ${t('therapy.stars')}`}
+                  </Text>
+                )}
+                {filters.videoSessions && (
+                  <Text style={styles.summaryText}>
+                    {t('therapy.onlineConsultations')}
+                  </Text>
+                )}
+                {selectedLanguages.length > 0 && (
+                  <Text style={styles.summaryText}>
+                    {`${t('therapy.languages')}: ${selectedLanguages.length} ${t('common.selected')}`}
+                  </Text>
+                )}
               </View>
             </View>
           </ScrollView>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.applyButton} onPress={handleApply}>
-              <Text style={styles.applyButtonText}>{t('therapy.applyFilters')}</Text>
+              <Text style={styles.applyButtonText}>
+                {t('therapy.applyFilters')} ({selectedSpecializations.length > 0 ? selectedSpecializations.length : t('therapy.all')})
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -353,9 +418,22 @@ const styles = StyleSheet.create({
   starContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    flexWrap: 'wrap',
   },
   star: {
     marginRight: 8,
+  },
+  clearRatingButton: {
+    marginLeft: 10,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    borderRadius: 8,
+  },
+  clearRatingText: {
+    fontSize: 12,
+    color: '#007AFF',
+    fontFamily: 'Poppins-Medium',
   },
   switchRow: {
     flexDirection: 'row',
@@ -366,6 +444,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     marginTop: 4,
+    marginBottom: 8,
     fontStyle: 'italic',
     fontFamily: 'Poppins-Regular',
   },
@@ -375,14 +454,19 @@ const styles = StyleSheet.create({
   },
   chip: {
     backgroundColor: 'rgba(3, 23, 76, 0.08)',
-    borderRadius: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
     marginRight: 8,
     marginBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   selectedChip: {
     backgroundColor: 'rgba(0, 122, 255, 0.15)',
+    borderColor: '#007AFF',
   },
   chipText: {
     fontSize: 14,
@@ -393,6 +477,22 @@ const styles = StyleSheet.create({
     color: '#007AFF',
     fontFamily: 'Poppins-Medium',
   },
+  checkIcon: {
+    marginLeft: 6,
+  },
+  summaryContainer: {
+    backgroundColor: 'rgba(0, 122, 255, 0.05)',
+    borderRadius: 12,
+    padding: 12,
+    borderLeftWidth: 3,
+    borderLeftColor: '#007AFF',
+  },
+  summaryText: {
+    fontSize: 13,
+    color: '#03174C',
+    fontFamily: 'Poppins-Regular',
+    marginBottom: 4,
+  },
   buttonContainer: {
     paddingTop: 15,
     borderTopWidth: 1,
@@ -400,9 +500,17 @@ const styles = StyleSheet.create({
   },
   applyButton: {
     backgroundColor: '#007AFF',
-    borderRadius: 10,
-    paddingVertical: 14,
+    borderRadius: 12,
+    paddingVertical: 16,
     alignItems: 'center',
+    shadowColor: '#007AFF',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   applyButtonText: {
     color: 'white',
@@ -423,9 +531,12 @@ const styles = StyleSheet.create({
     margin: 4,
     minWidth: '30%',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   selectedCityChip: {
     backgroundColor: 'rgba(0, 122, 255, 0.15)',
+    borderColor: '#007AFF',
   },
   cityChipText: {
     fontSize: 14,

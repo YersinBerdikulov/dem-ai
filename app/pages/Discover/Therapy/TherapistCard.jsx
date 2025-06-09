@@ -45,7 +45,7 @@ const TherapistCard = ({ therapist, onPress, compact = false }) => {
         <Image 
           source={{ uri: therapist.image }} 
           style={styles.image}
-          defaultSource={require('../../../../assets/icons/default-avatar.png')}
+        
           onError={() => console.log('Failed to load image for', therapist.name)}
         />
       ) : (

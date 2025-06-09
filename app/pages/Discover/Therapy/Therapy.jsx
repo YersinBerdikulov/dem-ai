@@ -54,7 +54,7 @@ const Therapy = ({ navigation }) => {
     const [selectedCity, setSelectedCity] = useState(kazakhstanCities[0]); // Default to current location
     
     const [filters, setFilters] = useState({
-      specializations: [],
+      specializations: [t('therapy.specializations.psychologist')], // Default to psychologist
       distance: 5000, // 5km in meters for Google API
       rating: 0,
       videoSessions: false,
@@ -77,7 +77,7 @@ const Therapy = ({ navigation }) => {
         // Otherwise use current location if available
         fetchNearbyTherapists(location.coords.latitude, location.coords.longitude);
       }
-    }, [selectedCity]);
+    }, [selectedCity, filters]);
 
     const requestLocationPermission = async () => {
       setIsLoading(true);
@@ -101,27 +101,108 @@ const Therapy = ({ navigation }) => {
       }
     };
 
+    // Helper function to determine if a place is a mental health specialist
+    const isMentalHealthSpecialist = (place) => {
+      const name = place.name.toLowerCase();
+      const types = place.types || [];
+      
+      // Keywords that indicate mental health specialists
+      const mentalHealthKeywords = [
+        'psycholog', 'psychiatr', 'therap', 'counsel', 'mental', 'clinic',
+        'психолог', 'психиатр', 'терапевт', 'консультант', 'клиника'
+      ];
+      
+      // Check if name contains mental health keywords
+      const nameMatch = mentalHealthKeywords.some(keyword => 
+        name.includes(keyword)
+      );
+      
+      // Check if it's a health-related place
+      const isHealthRelated = types.includes('health') || 
+                             types.includes('hospital') || 
+                             types.includes('doctor') ||
+                             types.includes('establishment');
+      
+      return nameMatch && isHealthRelated;
+    };
+
+    // Helper function to determine specialization based on place data
+    const determineSpecialization = (place) => {
+      const name = place.name.toLowerCase();
+      const types = place.types || [];
+      
+      if (name.includes('psychiatr') || name.includes('психиатр')) {
+        return t('therapy.specializations.psychiatrist');
+      } else if (name.includes('child') || name.includes('детск') || name.includes('ребен')) {
+        return t('therapy.specializations.childPsychologist');
+      } else if (name.includes('family') || name.includes('семейн') || name.includes('пар')) {
+        return t('therapy.specializations.familyTherapist');
+      } else if (name.includes('cognitive') || name.includes('когнитивн')) {
+        return t('therapy.specializations.cognitiveTherapist');
+      } else if (name.includes('counsel') || name.includes('консультант')) {
+        return t('therapy.specializations.counselor');
+      } else if (name.includes('clinic') || name.includes('клиника')) {
+        return t('therapy.specializations.mentalHealthClinic');
+      } else if (name.includes('neuro') || name.includes('нейро')) {
+        return t('therapy.specializations.neuropsychologist');
+      } else if (name.includes('addiction') || name.includes('зависим') || name.includes('наркол')) {
+        return t('therapy.specializations.addictionSpecialist');
+      } else if (name.includes('therap') || name.includes('терапевт')) {
+        return t('therapy.specializations.therapist');
+      } else {
+        // Default to psychologist for mental health places
+        return t('therapy.specializations.psychologist');
+      }
+    };
+
     // Fetch nearby therapists using Google Places API
     const fetchNearbyTherapists = async (latitude, longitude) => {
       try {
         setIsLoading(true);
         
-        // Start with a search query for therapists, psychologists, etc.
-        let searchTerms = 'psychologist|therapist|psychiatrist|mental health|counselor';
+        // Multiple search queries to get comprehensive results
+        const searchQueries = [
+          'psychologist',
+          'psychiatrist', 
+          'therapist',
+          'mental health clinic',
+          'counselor',
+          'psychological services',
+          'психолог',
+          'психиатр',
+          'психологическая помощь'
+        ];
         
-        // Add specialization filters if any selected
-        if (filters.specializations.length > 0) {
-          searchTerms = filters.specializations.join('|');
+        let allResults = [];
+        
+        // Search for each query
+        for (const query of searchQueries) {
+          try {
+            const response = await axios.get(
+              `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${filters.distance}&type=health&keyword=${query}&key=${GOOGLE_API_KEY}`
+            );
+            
+            if (response.data && response.data.results) {
+              allResults = [...allResults, ...response.data.results];
+            }
+          } catch (error) {
+            console.error(`Error searching for ${query}:`, error);
+          }
         }
         
-        // Make the request to Google Places API - Nearby Search
-        const response = await axios.get(
-          `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${filters.distance}&type=health&keyword=${searchTerms}&key=${GOOGLE_API_KEY}`
+        // Remove duplicates based on place_id
+        const uniqueResults = allResults.filter((place, index, self) =>
+          index === self.findIndex(p => p.place_id === place.place_id)
         );
         
-        if (response.data && response.data.results) {
+        // Filter to only include mental health specialists
+        const mentalHealthPlaces = uniqueResults.filter(place => 
+          isMentalHealthSpecialist(place)
+        );
+        
+        if (mentalHealthPlaces.length > 0) {
           // Process the results from Google Places API
-          const therapistsData = response.data.results.map(place => {
+          const therapistsData = mentalHealthPlaces.map(place => {
             // Calculate distance
             const distance = calculateDistance(
               latitude, 
@@ -130,17 +211,12 @@ const Therapy = ({ navigation }) => {
               place.geometry.location.lng
             );
             
-            // Extract and format the data with translated specializations
-            const getSpecializationTranslation = (types) => {
-              if (types.includes('psychologist')) return t('therapy.specializations.psychologist');
-              if (types.includes('psychiatrist')) return t('therapy.specializations.psychiatrist');
-              return t('therapy.specializations.therapist');
-            };
+            const specialization = determineSpecialization(place);
             
             return {
               id: place.place_id,
               name: place.name,
-              specialization: getSpecializationTranslation(place.types),
+              specialization: specialization,
               rating: place.rating || 0,
               reviewCount: place.user_ratings_total || 0,
               address: place.vicinity,
@@ -151,18 +227,13 @@ const Therapy = ({ navigation }) => {
               lat: place.geometry.location.lat,
               lng: place.geometry.location.lng,
               distance: distance,
-              place_id: place.place_id, // We'll use this to fetch more details
+              place_id: place.place_id,
               city: selectedCity?.name || t('therapy.currentLocation')
             };
           });
           
           // Apply filters
-          let filtered = therapistsData;
-          
-          // Filter by rating if needed
-          if (filters.rating > 0) {
-            filtered = filtered.filter(therapist => therapist.rating >= filters.rating);
-          }
+          let filtered = applyCurrentFilters(therapistsData);
           
           // Sort by distance
           filtered.sort((a, b) => a.distance - b.distance);
@@ -184,6 +255,28 @@ const Therapy = ({ navigation }) => {
       } finally {
         setIsLoading(false);
       }
+    };
+
+    // Apply current filters to therapists data
+    const applyCurrentFilters = (therapistsData) => {
+      let filtered = [...therapistsData];
+      
+      // Filter by specializations if any selected
+      if (filters.specializations && filters.specializations.length > 0) {
+        filtered = filtered.filter(therapist => 
+          filters.specializations.includes(therapist.specialization)
+        );
+      }
+      
+      // Filter by rating if needed
+      if (filters.rating > 0) {
+        filtered = filtered.filter(therapist => therapist.rating >= filters.rating);
+      }
+      
+      // Filter by languages if any selected (this would need to be implemented with place details)
+      // For now, we'll skip language filtering as it requires additional API calls
+      
+      return filtered;
     };
 
     // Fetch detailed information about a selected therapist
@@ -259,12 +352,9 @@ const Therapy = ({ navigation }) => {
       if (selectedFilters.city && selectedFilters.city.name !== selectedCity?.name) {
         setSelectedCity(selectedFilters.city);
       } else {
-        // Re-fetch with new filters if location is available
-        if (selectedCity && selectedCity.name !== t('therapy.currentLocation')) {
-          fetchNearbyTherapists(selectedCity.lat, selectedCity.lng);
-        } else if (location) {
-          fetchNearbyTherapists(location.coords.latitude, location.coords.longitude);
-        }
+        // Apply filters to current therapists list
+        const filtered = applyCurrentFilters(therapists);
+        setFilteredTherapists(filtered);
       }
     };
 
