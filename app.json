@@ -22,10 +22,8 @@
         "usesNonExemptEncryption": false,
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.445082810786-1lmm42tv3phjj4rbc9nnh59dtugk0743"
-        },
-        "facebookAppId": "1131088858800791",
-        "facebookDisplayName": "DEM AI",
-        "facebookAutoLogAppEventsEnabled": false
+        }
+     
       },
       "infoPlist": {
         "CFBundleURLTypes": [
@@ -45,11 +43,7 @@
           "googlechromes",
           "comgooglemaps"
         ],
-        "FacebookAppID": "1131088858800791",
-        "FacebookClientToken": "7e393518bc7c78771a5611d7736cbae4",
-        "FacebookDisplayName": "DEM AI",
-        "FacebookAutoLogAppEventsEnabled": false,
-        "FacebookAdvertiserIDCollectionEnabled": false,
+       
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
         "SKAdNetworkItems": [
           {
@@ -106,16 +100,7 @@
     "scheme": "demai",
     "plugins": [
       [
-        "expo-facebook",
-        {
-          "appID": "1131088858800791",
-          "clientToken": "7e393518bc7c78771a5611d7736cbae4",
-          "displayName": "DEM AI",
-          "scheme": "fb1131088858800791",
-          "advertiserIDCollectionEnabled": false,
-          "autoLogAppEventsEnabled": false,
-          "isAutoInitEnabled": false
-        }
+      
       ],
       "@react-native-google-signin/google-signin",
       [
@@ -132,9 +117,7 @@
     "extra": {
       "eas": {
         "projectId": "f9007a81-3fe2-4690-9610-6353f59ee041"
-      },
-      "facebookAppId": "1131088858800791",
-      "facebookClientToken": "7e393518bc7c78771a5611d7736cbae4"
+      }
     },
     "owner": "yersultan12",
     "web": {
