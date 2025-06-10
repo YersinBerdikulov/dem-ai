@@ -19,10 +19,8 @@
       "bundleIdentifier": "com.demai.app",
       "buildNumber": "1.0.0",
       "config": {
-        "usesNonExemptEncryption": false,
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.445082810786-1lmm42tv3phjj4rbc9nnh59dtugk0743"
-        }
+        "usesNonExemptEncryption": false
+       
       },
       "infoPlist": {
         "CFBundleURLTypes": [
