@@ -2,6 +2,8 @@ package com.demai.app
 
 import android.app.Application
 import android.content.res.Configuration
+import com.demai.app.BuildConfig
+import com.demai.app.R
 
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication

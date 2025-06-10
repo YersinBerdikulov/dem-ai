@@ -2,6 +2,8 @@ package com.demai.app
 
 import android.os.Build
 import android.os.Bundle
+import com.demai.app.BuildConfig
+import com.demai.app.R
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
