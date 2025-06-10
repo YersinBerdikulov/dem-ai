@@ -11,6 +11,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#03174C"
     },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "expo-constants/scripts/get-app-config-sync.js",
+          "config": {}
+        }
+      ]
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -20,7 +28,6 @@
       "buildNumber": "1.0.0",
       "config": {
         "usesNonExemptEncryption": false
-       
       },
       "infoPlist": {
         "CFBundleURLTypes": [
@@ -106,10 +113,7 @@
         {
           "photosPermission": "The app needs access to your photos to set your profile picture."
         }
-      ],
-      "expo-asset",
-      "expo-font",
-      "expo-web-browser"
+      ]
     ],
     "newArchEnabled": false,
     "extra": {
