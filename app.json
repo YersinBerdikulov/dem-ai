@@ -112,6 +112,17 @@
         {
           "photosPermission": "The app needs access to your photos to set your profile picture."
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "35.0.0",
+            "kotlinVersion": "1.9.25"
+          }
+        }
       ]
     ],
     "newArchEnabled": false,
