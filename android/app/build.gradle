@@ -86,7 +86,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.demai"
+    namespace "com.demai.app"
     defaultConfig {
         applicationId "com.demai"
         minSdkVersion rootProject.ext.minSdkVersion
