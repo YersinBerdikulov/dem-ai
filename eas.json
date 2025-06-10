@@ -11,14 +11,14 @@
     "preview": {
       "android": {
         "buildType": "apk",
-        "prebuildCommand": "rm -rf android/app/src/main/java/com/demai/app/MainActivity.kt android/app/src/main/java/com/demai/app/MainApplication.kt || true"
+        "prebuildCommand": "npm install && rm -rf android/app/src/main/java/com/demai/app/MainActivity.kt android/app/src/main/java/com/demai/app/MainApplication.kt || true"
       },
       "distribution": "internal"
     },
     "production": {
       "autoIncrement": true,
       "android": {
-        "prebuildCommand": "rm -rf android/app/src/main/java/com/demai/app/MainActivity.kt android/app/src/main/java/com/demai/app/MainApplication.kt || true"
+        "prebuildCommand": "npm install && rm -rf android/app/src/main/java/com/demai/app/MainActivity.kt android/app/src/main/java/com/demai/app/MainApplication.kt || true"
       }
     }
   },
