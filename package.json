@@ -14,7 +14,7 @@
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-native-community/datetimepicker": "8.3.0",
     "@react-native-community/slider": "4.5.6",
-    "@react-native-firebase/app": "^21.7.0",
+    "@react-native-firebase/app": "^21.14.0",
     "@react-native-firebase/auth": "^21.7.1",
     "@react-native-google-signin/google-signin": "^13.1.0",
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -46,7 +46,6 @@
     "react-native": "0.79.3",
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "~2.24.0",
-    "react-native-google-mobile-ads": "^14.8.0",
     "react-native-google-places-autocomplete": "^2.5.7",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-maps": "1.20.1",
@@ -57,7 +56,7 @@
     "react-native-web": "^0.20.0",
     "styled-components": "^6.1.14"
   },
-   "expo": {
+  "expo": {
     "doctor": {
       "reactNativeDirectoryCheck": {
         "listUnknownPackages": false

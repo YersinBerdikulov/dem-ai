@@ -2,8 +2,6 @@ package com.demai.app
 
 import android.os.Build
 import android.os.Bundle
-import com.demai.app.BuildConfig
-import com.demai.app.R
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -17,7 +15,7 @@ class MainActivity : ReactActivity() {
     // Set the theme to AppTheme BEFORE onCreate to support
     // coloring the background, status bar, and navigation bar.
     // This is required for expo-splash-screen.
-    setTheme(com.demai.app.R.style.AppTheme);
+    setTheme(R.style.AppTheme);
     super.onCreate(null)
   }
 
@@ -34,7 +32,7 @@ class MainActivity : ReactActivity() {
   override fun createReactActivityDelegate(): ReactActivityDelegate {
     return ReactActivityDelegateWrapper(
           this,
-          com.demai.app.BuildConfig.IS_NEW_ARCHITECTURE_ENABLED,
+          BuildConfig.IS_NEW_ARCHITECTURE_ENABLED,
           object : DefaultReactActivityDelegate(
               this,
               mainComponentName,

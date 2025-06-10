@@ -67,6 +67,9 @@
         "android.permission.INTERNET",
         "android.permission.RECORD_AUDIO"
       ],
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713"
+      },
       "intentFilters": [
         {
           "action": "VIEW",
