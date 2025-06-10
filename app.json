@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.demal.app",
+      "bundleIdentifier": "com.demai.app",
       "buildNumber": "1.0.0",
       "config": {
         "usesNonExemptEncryption": false,
@@ -113,7 +113,7 @@
       "expo-font",
       "expo-web-browser"
     ],
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "extra": {
       "eas": {
         "projectId": "f9007a81-3fe2-4690-9610-6353f59ee041"

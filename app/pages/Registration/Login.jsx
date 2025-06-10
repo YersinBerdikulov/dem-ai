@@ -17,7 +17,6 @@ import { useFonts } from 'expo-font';
 import { authStyles } from '../../../styles/auth/styles';
 import { signInWithEmail } from '../../../services/auth';
 
-import { useGoogleAuth } from '../../hooks/useGoogleAuth';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -32,7 +31,7 @@ const Login = ({ navigation }) => {
  
 
   // Use the updated Google auth hook
-  const [googleSignIn, googleAuthState] = useGoogleAuth();
+
   
   // Use a ref to track if we've already navigated
   const hasNavigated = useRef(false);
@@ -40,32 +39,8 @@ const Login = ({ navigation }) => {
   // Monitor Facebook user state
  
   // Monitor Google user state
-  useEffect(() => {
-    // Only navigate if we have a valid user object and haven't already navigated
-    if (googleAuthState?.user?.uid && !hasNavigated.current) {
-      console.log("Valid Google user detected, navigating to MainApp");
-      hasNavigated.current = true;
-      navigation.navigate('MainApp');
-    }
-    
-    // Handle authentication errors
-    if (googleAuthState?.error && googleAuthState.error.message !== "Authentication cancelled") {
-      console.error('Google auth error details:', googleAuthState.error);
-      Alert.alert(
-        'Authentication Error',
-        'Failed to sign in with Google. Please try again.'
-      );
-    }
-  }, [googleAuthState, navigation]);
 
   // Handle loading state from Google auth - separate useEffect to prevent loops
-  useEffect(() => {
-    // Only update if the value actually changed to prevent loops
-    if (googleAuthState?.loading !== undefined && 
-        socialLoading.google !== googleAuthState.loading) {
-      setSocialLoading(prev => ({...prev, google: googleAuthState.loading}));
-    }
-  }, [googleAuthState?.loading]);
 
   const [fontsLoaded] = useFonts({
     'Poppins-Regular': require('../../../assets/fonts/Poppins-Regular.ttf'),
@@ -126,26 +101,7 @@ const Login = ({ navigation }) => {
   };
 
   // Handle Google login
-  const handleGoogleLogin = async () => {
-    // Prevent multiple calls
-    if (socialLoading.google) return;
-    
-    try {
-      console.log('Starting Google sign-in process...');
-      // We'll let the hook handle the loading state now
-      const result = await googleSignIn();
-      
-      if (result?.type !== 'success') {
-        console.log('Google sign-in flow ended without success:', result?.type);
-      }
-    } catch (error) {
-      console.error('Google login error:', error);
-      Alert.alert(
-        'Authentication Error',
-        'Failed to sign in with Google. Please try again.'
-      );
-    }
-  };
+
 
   // Show loading screen if fonts are not loaded
   if (!fontsLoaded) {

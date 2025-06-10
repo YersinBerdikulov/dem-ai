@@ -15,7 +15,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { authStyles } from '../../../styles/auth/style';
 import { signUpWithEmail } from '../../../services/auth';
 
-import { useGoogleAuth } from '../../hooks/useGoogleAuth';
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -31,8 +30,6 @@ const SignUp = ({ navigation }) => {
 
 
 
-  const [signInWithGoogle, googleRequest] = useGoogleAuth();
-
   const [fontsLoaded] = useFonts({
     'Poppins-Regular': require('../../../assets/fonts/Poppins-Regular.ttf'),
     'Poppins-Medium': require('../../../assets/fonts/Poppins-Medium.ttf'),
@@ -44,23 +41,7 @@ const SignUp = ({ navigation }) => {
 
 
 
-  const handleGoogleSignUp = async () => {
-    try {
-      setSocialLoading({ ...socialLoading, google: true });
-      const user = await signInWithGoogle();
-      if (user) {
-        navigation.navigate('MainApp');
-      }
-    } catch (error) {
-      console.error('Google signup error:', error);
-      Alert.alert(
-        'Authentication Error',
-        'Failed to sign in with Google. Please try again.'
-      );
-    } finally {
-      setSocialLoading({ ...socialLoading, google: false });
-    }
-  };
+
 
   const handleEmailSignUp = async () => {
     if (!privacyAccepted) {
