@@ -1,4 +1,4 @@
-// app/screens/auth/Login.jsx
+// app/pages/Registration/Login.jsx - Fixed version
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   View, 
@@ -17,30 +17,10 @@ import { useFonts } from 'expo-font';
 import { authStyles } from '../../../styles/auth/styles';
 import { signInWithEmail } from '../../../services/auth';
 
-
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState({
-    facebook: false,
-    google: false
-  });
-
-  // Use the Facebook auth hook
- 
-
-  // Use the updated Google auth hook
-
-  
-  // Use a ref to track if we've already navigated
-  const hasNavigated = useRef(false);
-
-  // Monitor Facebook user state
- 
-  // Monitor Google user state
-
-  // Handle loading state from Google auth - separate useEffect to prevent loops
 
   const [fontsLoaded] = useFonts({
     'Poppins-Regular': require('../../../assets/fonts/Poppins-Regular.ttf'),
@@ -48,13 +28,6 @@ const Login = ({ navigation }) => {
     'Poppins-SemiBold': require('../../../assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Bold': require('../../../assets/fonts/Poppins-Bold.ttf'),
   });
-
-  // Reset navigation flag when component unmounts
-  useEffect(() => {
-    return () => {
-      hasNavigated.current = false;
-    };
-  }, []);
 
   // Handle email login
   const handleEmailLogin = async () => {
@@ -67,7 +40,8 @@ const Login = ({ navigation }) => {
       setLoading(true);
       const { user } = await signInWithEmail(email, password);
       if (user) {
-        navigation.navigate('MainApp'); // Navigate to the main app after successful login
+        // No need to navigate manually - Firebase auth state will handle it
+        console.log('Login successful');
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -99,9 +73,6 @@ const Login = ({ navigation }) => {
       setLoading(false);
     }
   };
-
-  // Handle Google login
-
 
   // Show loading screen if fonts are not loaded
   if (!fontsLoaded) {
@@ -167,7 +138,7 @@ const Login = ({ navigation }) => {
                 loading && { opacity: 0.7 }
               ]}
               onPress={handleEmailLogin}
-              disabled={loading || socialLoading.facebook || socialLoading.google}
+              disabled={loading}
             >
               {loading ? (
                 <ActivityIndicator color="white" />

@@ -1,11 +1,13 @@
-// App.js - Updated with LanguageProvider
-import React from 'react';
+// App.js - Fixed with proper authentication state management
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemeProvider } from 'styled-components';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './config/firebase';
 
 // Import Language Provider
 import { LanguageProvider } from './app/context/LanguageContext';
@@ -128,7 +130,6 @@ function HomeStackScreen() {
       <HomeStack.Screen name="BreathingExercise" component={BreathingExercise} />
       <HomeStack.Screen name="NatureSounds" component={NatureSounds} />
       <HomeStack.Screen name="SoundPlayer" component={SoundPlayer} />
-
       <HomeStack.Screen name="News" component={News} />
     </HomeStack.Navigator>
   );
@@ -203,7 +204,6 @@ function SettingsStackScreen() {
       }}
     >
       <SettingsStack.Screen name="SettingsHome" component={Settings} />
-     
       <SettingsStack.Screen name="Achievements" component={Achievements} />
       <SettingsStack.Screen name="Notifications" component={Notifications} />
       <SettingsStack.Screen name="SobrietyClocks" component={Clock} />
@@ -300,26 +300,56 @@ function TabNavigator() {
   );
 }
 
+// Authentication Navigator
+function AuthNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: theme.colors.background },
+      }}
+    >
+      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="Verification" component={Verification} />
+      <Stack.Screen name="NewPassword" component={NewPassword} />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+      setIsLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (isLoading) {
+    return (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <LanguageProvider>
+          <ThemeProvider theme={theme}>
+            <SplashScreen />
+          </ThemeProvider>
+        </LanguageProvider>
+      </GestureHandlerRootView>
+    );
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <LanguageProvider>
         <ThemeProvider theme={theme}>
           <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-                contentStyle: { backgroundColor: theme.colors.background },
-              }}
-            >
-              <Stack.Screen name="Splash" component={SplashScreen} />
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="SignUp" component={SignUp} />
-              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-              <Stack.Screen name="Verification" component={Verification} />
-              <Stack.Screen name="NewPassword" component={NewPassword} />
-              <Stack.Screen name="MainApp" component={TabNavigator} />
-            </Stack.Navigator>
+            {isAuthenticated ? <TabNavigator /> : <AuthNavigator />}
           </NavigationContainer>
         </ThemeProvider>
       </LanguageProvider>
