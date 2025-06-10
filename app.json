@@ -11,14 +11,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#03174C"
     },
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "expo-constants/scripts/get-app-config-sync.js",
-          "config": {}
-        }
-      ]
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -120,7 +112,10 @@
             "compileSdkVersion": 35,
             "targetSdkVersion": 34,
             "buildToolsVersion": "35.0.0",
-            "kotlinVersion": "1.9.25"
+            "kotlinVersion": "1.9.25",
+            "buildFeatures": {
+              "buildConfig": true
+            }
           }
         }
       ]

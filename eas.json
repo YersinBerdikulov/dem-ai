@@ -11,7 +11,10 @@
     "preview": {
       "android": {
         "buildType": "apk",
-        "prebuildCommand": "rm -rf android/app/src/main/java/com/demai/app/MainActivity.kt android/app/src/main/java/com/demai/app/MainApplication.kt || true"
+        "prebuildCommand": "rm -rf android ios && npx expo prebuild --platform android --clean",
+        "env": {
+          "NODE_ENV": "production"
+        }
       },
       "distribution": "internal"
     },
