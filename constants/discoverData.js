@@ -7,14 +7,7 @@ export const DISCOVER_CARDS = [
       route: 'Habits',
       icon: require('../assets/icons/habits.png'),
     },
-    {
-      id: 'therapy',
-      title: 'Therapy',
-      sessions: 20,
-      colors: ['#52E5E7', '#130CB7'],
-      route: 'Therapy',
-      icon: require('../assets/icons/therapist.png'),
-    },
+
     {
       id: 'relaxation',
       title: 'Relaxation',
