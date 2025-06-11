@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, SafeAreaView, Image, TouchableOpacity, TextInput, FlatList, Animated, Dimensions, ActivityIndicator, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-//import MapView, { PROVIDER_DEFAULT } from 'react-native-maps';
+import MapView, { PROVIDER_DEFAULT } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { therapyStyles as styles } from '../../../../styles/discover/therapy/TherapyStyles';
 import { LinearGradient } from 'expo-linear-gradient';

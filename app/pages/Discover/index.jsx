@@ -30,7 +30,15 @@ const Discover = ({ navigation }) => {
       icon: require('../../../assets/icons/habits.png'),
       tags: [t('discover.tags.habits'), t('discover.tags.routine'), t('discover.tags.lifestyle')]
     },
-  
+   {
+      id: 'therapy',
+      title: t('discover.cards.therapy'),
+      sessions: 20,
+      colors: ['#52E5E7', '#130CB7'],
+      route: 'Therapy',
+      icon: require('../../../assets/icons/therapist.png'),
+      tags: [t('discover.tags.therapy'), t('discover.tags.counseling'), t('discover.tags.mentalHealth')]
+    },
     {
       id: 'relaxation',
       title: t('discover.cards.relaxation'),

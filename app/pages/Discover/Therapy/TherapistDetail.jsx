@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-//import MapView, { Marker, PROVIDER_DEFAULT } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_DEFAULT } from 'react-native-maps';
 import { therapistDetailStyles as styles } from '../../../../styles/discover/therapy/TherapistDetailStyles';
 import CustomMapMarker from './CustomMapMarker';
 import { useLanguage } from '../../../context/LanguageContext';

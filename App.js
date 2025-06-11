@@ -89,8 +89,8 @@ import ResultTest from './app/pages/Home/PersonalityTest/ResultTest';
 import Meditation from './app/pages/Discover/Meditation/Meditation';
 import IntroMeditation from './app/pages/Discover/Meditation/IntroMeditation';
 import SoundMeditation from './app/pages/Discover/Meditation/SoundMeditation';
-//import Therapy from './app/pages/Discover/Therapy/Therapy';
-//import TherapistDetail from './app/pages/Discover/Therapy/TherapistDetail';
+import Therapy from './app/pages/Discover/Therapy/Therapy';
+import TherapistDetail from './app/pages/Discover/Therapy/TherapistDetail';
 
 // Create stack and tab navigators
 const Stack = createNativeStackNavigator();
@@ -187,8 +187,8 @@ function DiscoverStackScreen() {
       <DiscoverStack.Screen name="Meditation" component={Meditation} />
       <DiscoverStack.Screen name="IntroMeditation" component={IntroMeditation} />
       <DiscoverStack.Screen name="SoundMeditation" component={SoundMeditation} />
-      {/* <DiscoverStack.Screen name="Therapy" component={Therapy} />
-      <DiscoverStack.Screen name="TherapistDetail" component={TherapistDetail} />*/}
+      <DiscoverStack.Screen name="Therapy" component={Therapy} />
+      <DiscoverStack.Screen name="TherapistDetail" component={TherapistDetail} />
       <DiscoverStack.Screen name="SoundPlayer" component={SoundPlayer} />
     </DiscoverStack.Navigator>
   );
